@@ -1,7 +1,6 @@
 package com.example.healthproducts.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.healthproducts.ProductInfoActivity;
-import com.example.healthproducts.Products_DataBase;
 import com.example.healthproducts.R;
 import com.example.healthproducts.server.adapter.ProductAdapter;
 import com.example.healthproducts.server.dataBase.DataBase;
@@ -39,29 +36,18 @@ public class SearchProductFragment extends Fragment {
     private String code;
 
     WebView gifLoad;
-    private String loadUrl = "https://s2.siteapi.org/17f5be73889a440/docs/d711owd1khwgg0484csg8w8kgko00w";
+    public static final String loadUrl = "https://s2.siteapi.org/17f5be73889a440/docs/d711owd1khwgg0484csg8w8kgko00w";
     private TextView textStatus;
     private ImageView imageStatus;
     Handler handler;
-
-
-
     private TextView nameProduct;
     private LinearLayout infoProduct;
-
-
-
-    private boolean isFinding = true;
-
-
+    private boolean isFinding;
     private Document doc;
     private Thread parseThread;
     private Runnable parseRunnable;
     Elements elements;
-
     ArrayList<String> urls;
-
-
     String foundName;
     String foundComposition;
     String foundFototUrl;
@@ -87,22 +73,22 @@ public class SearchProductFragment extends Fragment {
 
         handler = new Handler();
 
-
         urls = new ArrayList<>();
+
         code = getArguments().getSerializable("code").toString();
 
         showStatus("search");
 
         Product foundProduct = null;
         for (Product product : DataBase.PRODUCT_LIST) {
-            if(product.getCode().toString().equals(code.toString())){
+            if(product.getCode().equals(code.toString())){
                 foundProduct = product;
                 break;
             }
             Log.d("API_TEST", code + " = + = " + product.getCode());
         }
 
-        if(foundProduct != null){
+        if(foundProduct != null){ //если нашли продукт в базе данных, запускаем фрагмент с этим продуктом
             ProductInfoFragment productInfoFragment = new ProductInfoFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(ProductAdapter.PRODUCT_KEY, foundProduct);
@@ -132,7 +118,7 @@ public class SearchProductFragment extends Fragment {
         parseThread = new Thread(parseRunnable);
         parseThread.start();
     }
-    private void getWeb(){
+    private void getWeb(){ //метод получения url продукта (заходит в гугл и парсит все ссылки)
 
         try {
             doc = Jsoup.connect("https://www.google.com/search?q=" + code).get();
@@ -208,11 +194,11 @@ public class SearchProductFragment extends Fragment {
         }
     }
 
-    void findProductInfo(){
+    void findProductInfo(){ //метод для нахождения информации о продукте
         Log.d("ParseLog", "=================[STEP 2: search for name]=================================");
 
         int i = 0;
-        while(i < urls.size()) {
+        while(i < urls.size()) { //проходим по всем url
             try{
             try {
                 doc = Jsoup.connect(urls.get(i)).get();
@@ -238,7 +224,6 @@ public class SearchProductFragment extends Fragment {
 
                 foundName = doc.getElementsByClass("hero").get(0).text();
 
-                foundComposition = els.get(0).children().get(3).text();
 
                 Product product = new Product(
                         foundName,
@@ -286,7 +271,7 @@ public class SearchProductFragment extends Fragment {
                 Product product = new Product(
                         foundName,
                         code,
-                        foundCategory,
+                        DataBase.CATEGORY_LIST.get(1),
                         foundComposition,
                         foundFototUrl
 
@@ -335,7 +320,7 @@ public class SearchProductFragment extends Fragment {
     }
 
     @SuppressLint("ResourceAsColor")
-    void showStatus(String status){
+    void showStatus(String status){ //метод показа статуса поиска продукта
         switch(status){
             case "load":
                 gifLoad.loadUrl(loadUrl);

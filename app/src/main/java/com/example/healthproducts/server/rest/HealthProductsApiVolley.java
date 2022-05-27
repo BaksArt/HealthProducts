@@ -1,7 +1,6 @@
 package com.example.healthproducts.server.rest;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -13,7 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.healthproducts.Products_DataBase;
+import com.example.healthproducts.MainActivityHP;
 import com.example.healthproducts.server.dataBase.DataBase;
 import com.example.healthproducts.server.domain.Category;
 import com.example.healthproducts.server.domain.Product;
@@ -31,7 +30,7 @@ public class HealthProductsApiVolley implements HealthProductsApi{
 
     public static final String API_TEST = "API_TEST";
     private final Context context;
-    public static final String BASE_URL = "http://192.168.186.209:8085";
+    public static final String BASE_URL = "http://192.168.43.14:8085";
 
     private Response.ErrorListener errorListener;
 
@@ -61,7 +60,7 @@ public class HealthProductsApiVolley implements HealthProductsApi{
                                 DataBase.PRODUCT_LIST.add(product);
                             }
                             try{
-                                ((Products_DataBase)context).updateAdapter();
+                                ((MainActivityHP)context).updateAdapter();
                             }catch(Exception e){}
 
 

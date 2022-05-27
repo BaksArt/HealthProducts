@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.healthproducts.server.adapter.ProductAdapter;
 import com.example.healthproducts.server.dataBase.DataBase;
 import com.example.healthproducts.ui.DataBaseFragment;
 import com.example.healthproducts.ui.ProductInfoFragment;
@@ -29,6 +30,7 @@ public class MainActivityHP extends AppCompatActivity {
     ScannerFragment scannerFragment = new ScannerFragment();
     DataBaseFragment dataBaseFragment = new DataBaseFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
+    private ProductAdapter productAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +39,9 @@ public class MainActivityHP extends AppCompatActivity {
        bottomNavigationView = findViewById(R.id.botton_navigation);
 
        getSupportFragmentManager().beginTransaction().replace(R.id.container, scannerFragment).commit();
-
-        DataBase.DANGER_INGREDIENTS.add("жир растительный");
-        DataBase.DANGER_INGREDIENTS.add("растительные масла");
-        DataBase.DANGER_INGREDIENTS.add("пальмовое");
-        DataBase.DANGER_INGREDIENTS.add("идентичный натуральному");
-        DataBase.DANGER_INGREDIENTS.add("E");
-        DataBase.DANGER_INGREDIENTS.add("Е");
-
        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
            @Override
-           public boolean onNavigationItemSelected(MenuItem item) {
+           public boolean onNavigationItemSelected(MenuItem item) { //navigation bottom bar
                switch(item.getItemId()){
                    case R.id.scanner:
                    getSupportFragmentManager().beginTransaction().replace(R.id.container, scannerFragment).commit();
@@ -87,5 +81,7 @@ public class MainActivityHP extends AppCompatActivity {
 
         }
     }
-
+    public void updateAdapter(){
+        productAdapter.notifyDataSetChanged();
+    }
 }

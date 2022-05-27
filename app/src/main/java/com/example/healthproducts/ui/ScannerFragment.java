@@ -36,7 +36,6 @@ public class ScannerFragment extends Fragment {
     private Document doc;
     private Thread parseThread;
     private Runnable parseRunnable;
-
     private SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
@@ -44,15 +43,6 @@ public class ScannerFragment extends Fragment {
     private ToneGenerator toneGen1;
     private TextView barcodeText;
     private String barcodeData;
-
-
-
-
-    Elements elements;
-
-
-    ArrayList<String> urls = new ArrayList<String>();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,16 +54,8 @@ public class ScannerFragment extends Fragment {
 
 
         HealthProductsApiVolley healthProductsApiVolley = new HealthProductsApiVolley(getContext());
-        healthProductsApiVolley.fillProduct();
+        healthProductsApiVolley.fillProduct(); //обновляем базу данных перед сканированием
         healthProductsApiVolley.fillCategory();
-
-
-
-
-
-        // Inflate the layout for this fragment
-
-
 
         return view;
 
@@ -97,7 +79,7 @@ public class ScannerFragment extends Fragment {
         cameraSource.release();
     }
 
-    private void initialiseDetectorsAndSources() {
+    private void initialiseDetectorsAndSources() { //метод для включения камеры и детектеров
 
 
         barcodeDetector = new BarcodeDetector.Builder(getContext())
@@ -167,13 +149,14 @@ public class ScannerFragment extends Fragment {
                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
 
                             }
+
                             Toast.makeText(getContext(), "Код отсканирован", Toast.LENGTH_SHORT).show();
                             cameraSource.release();
 
 
                             SearchProductFragment searchProductFragment = new SearchProductFragment();
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("code", barcodeData);
+                            bundle.putSerializable("code", barcodeData); //передаем код продукта
 
 
                             searchProductFragment.setArguments(bundle);

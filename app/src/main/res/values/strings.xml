@@ -42,5 +42,5 @@
     <string name="free_sugar">Без сахара</string>
     <string name="free_e">Без \"E\"</string>
     <string name="full_nature">Натурально</string>
-    <string name="appInfo">Приложение использует интернет для поиска продуктов. Вся иформация, найденная о продукте взята с различных сайтов</string>
+    <string name="appInfo">Приложение использует интернет для поиска продуктов. Вся иформация, найденная о продукте взята с различных сайтов.</string>
 </resources>

@@ -32,14 +32,11 @@ public class DataBaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_data_base, container, false);
 
         HealthProductsApiVolley healthProductsApiVolley = new HealthProductsApiVolley(getContext());
         healthProductsApiVolley.fillProduct();
         healthProductsApiVolley.fillCategory();
-
-
 
         rvProduct = view.findViewById(R.id.rv_book);
 

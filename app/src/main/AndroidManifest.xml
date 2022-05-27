@@ -15,19 +15,9 @@
         android:usesCleartextTraffic="true">
 
 
-        <activity
-            android:name=".Products_DataBase"
-            android:exported="true" />
-
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
-
-        </activity>
 
         <activity
             android:name=".MainActivityHP"
@@ -38,9 +28,6 @@
             </intent-filter>
 
         </activity>
-        <activity
-            android:name=".ProductInfoActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
