@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">HealthProducts</string>
+    <string name="title_activity_main_navigation">Main_navigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add">Добавить</string>
+    <string name="add_product">Добавить продукт</string>
+    <string name="product_name">Название продукта</string>
+    <string name="name">название</string>
+    <string name="category">Категория</string>
+    <string name="product_code">Артикул</string>
+    <string name="code">артикул</string>
+    <string name="product_composition">Состав</string>
+    <string name="composition">состав</string>
+    <string name="change_product">Изменить продукт</string>
+    <string name="change">Изменить</string>
+    <string name="product_foto">Фото</string>
+    <string name="fotoUrl">Введите фото url</string>
+    <string name="title_activity_main_hp">MainActivityHP</string>
+    <string name="title_qrcode">Сканировать</string>
+    <string name="title_database">Список</string>
+    <string name="title_settings">Настройки</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="close">закрыть</string>
+    <string name="free_palm_oil">Без пальмы</string>
+    <string name="free_sugar">Без сахара</string>
+    <string name="free_e">Без \"E\"</string>
+    <string name="full_nature">Натурально</string>
+    <string name="appInfo">Приложение использует интернет для поиска продуктов. Вся иформация, найденная о продукте взята с различных сайтов</string>
+</resources>

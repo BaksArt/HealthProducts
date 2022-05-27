@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lightGreen">#8BC34A</color>
+    <color name="bar">#009662</color>
+    <color name="upBar">#00755A</color>
+    <color name="yellgre">#CDDC39</color>
+    <color name="salad">#8BC34A</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#E8EEEE</color>
+
+    <color name="cyan">#009667</color>
+    <color name="yellow">#FFC107</color>
+    <color name="red">#F11743</color>
+    <color name="darkGray">#202020</color>
+
+</resources>
