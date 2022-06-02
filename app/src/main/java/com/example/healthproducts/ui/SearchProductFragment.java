@@ -200,16 +200,19 @@ public class SearchProductFragment extends Fragment {
         int i = 0;
         while(i < urls.size()) { //проходим по всем url
             try{
-            try {
-                doc = Jsoup.connect(urls.get(i)).get();
-                Log.d("ParseLog", "connected to: " + urls.get(i));
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
 
 
             if (urls.get(i).contains("goods.kaypu.com")) {
+                try {
+                    doc = Jsoup.connect(urls.get(i)).get();
+                    Log.d("ParseLog", "connected to: " + urls.get(i));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Element el = doc.getElementById("gallery");
 
                 try {
@@ -224,6 +227,8 @@ public class SearchProductFragment extends Fragment {
 
                 foundName = doc.getElementsByClass("hero").get(0).text();
 
+                foundComposition = els.get(0).children().get(5).text();
+                Log.d("ParseLog", "compos" + foundComposition);
 
                 Product product = new Product(
                         foundName,
@@ -259,6 +264,14 @@ public class SearchProductFragment extends Fragment {
             }
 
             if (urls.get(i).contains("www.onlinetrade.ru")){
+                try {
+                    doc = Jsoup.connect(urls.get(i)).get();
+                    Log.d("ParseLog", "connected to: " + urls.get(i));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                     Elements els = doc.getElementsByClass("productPage");
                     foundName = els.get(0).children().get(0).children().get(0).text();
                     els = doc.getElementsByClass("oldContent");
@@ -271,7 +284,53 @@ public class SearchProductFragment extends Fragment {
                 Product product = new Product(
                         foundName,
                         code,
-                        DataBase.CATEGORY_LIST.get(1),
+                        foundCategory,
+                        foundComposition,
+                        foundFototUrl
+
+                );
+                if (foundName != null && foundComposition != null) {
+                    new HealthProductsApiVolley(getContext()).addProduct(product);
+
+
+                    foundProduct = product;
+                    if (!DataBase.PRODUCT_LIST.contains(foundProduct)) {
+
+
+                        Log.d("ParseLog", "product: " + foundProduct.toString());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                showStatus("complete");
+                            }
+                        });
+
+
+                        break;
+                    }
+                }
+            }
+
+            if(urls.get(i).contains("priceguard.ru")){
+                try {
+                    doc = Jsoup.connect(urls.get(i)).get();
+                    Log.d("ParseLog", "connected to: " + urls.get(i));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                foundName = doc.getElementsByClass("op-details-td-details-td").get(0).children().get(0).text();
+                foundFototUrl = doc.getElementsByClass("op-image-block").get(0).select("img").attr("src");
+                foundComposition = doc.getElementsByClass("op-desc").text().substring(14);
+
+                Log.d("ParseLog", "found name  " + foundName);
+                Log.d("ParseLog", "found url  " + foundFototUrl);
+                Log.d("ParseLog", "found Com  " + foundComposition);
+                Product product = new Product(
+                        foundName,
+                        code,
+                        DataBase.CATEGORY_LIST.get(0),
                         foundComposition,
                         foundFototUrl
 
@@ -326,23 +385,25 @@ public class SearchProductFragment extends Fragment {
                 gifLoad.loadUrl(loadUrl);
                 gifLoad.setVisibility(View.VISIBLE);
                 imageStatus.setVisibility(View.GONE);
+                //textStatus.setTextColor(R.color.cyan);
                 textStatus.setText("Поиск товара...");
-                textStatus.setTextColor(R.color.darkGray);
+
                 break;
 
             case "search":
                 gifLoad.loadUrl(loadUrl);
                 gifLoad.setVisibility(View.VISIBLE);
                 imageStatus.setVisibility(View.GONE);
+                //textStatus.setTextColor(R.color.cyan);
                 textStatus.setText("Поиск по базе данных...");
-                textStatus.setTextColor(R.color.darkGray);
+
                 break;
 
             case "error":
                 gifLoad.setVisibility(View.GONE);
                 imageStatus.setVisibility(View.VISIBLE);
                 imageStatus.setImageResource(R.drawable.error);
-                textStatus.setText("Товар не найден");
+                //textStatus.setText("Товар не найден");
                 textStatus.setTextColor(R.color.yellow);
                 break;
 
@@ -351,7 +412,7 @@ public class SearchProductFragment extends Fragment {
                 imageStatus.setVisibility(View.VISIBLE);
                 imageStatus.setImageResource(R.drawable.complete);
                 textStatus.setText("Поиск завершен!");
-                textStatus.setTextColor(R.color.cyan);
+                //textStatus.setTextColor(R.color.cyan);
 
                 try {
                     Thread.sleep(1000);

@@ -125,6 +125,7 @@ public class ProductInfoFragment extends Fragment {
         setHighLightedText(tvProductComposition, "жир растительный", 0, Color.argb(255, 255, 193, 7), 20);
         setHighLightedText(tvProductComposition, "растительные масла", 0, Color.argb(255, 255, 193, 7), 20);
         setHighLightedText(tvProductComposition, "растительное масло", 0, Color.argb(255, 255, 193, 7), 20);
+        setHighLightedText(tvProductComposition, "масло растительное", 0, Color.argb(255, 255, 193, 7), 20);
         setHighLightedText(tvProductComposition, "пальмовое", 0, Color.argb(255, 255, 193, 7), 20);
         setHighLightedText(tvProductComposition, "идентичный натуральному", 0, Color.argb(255, 255, 193, 7), 10);
         setHighLightedText(tvProductComposition, "E", 3,  Color.argb(255, 255, 193, 7),5);

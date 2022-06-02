@@ -10,6 +10,6 @@
     android:layout_marginRight="50dp"
     android:gravity="center"
     android:padding="12dp"
-    android:textColor="@color/black"
+    android:textColor="?attr/textFillColor"
     android:textSize="25sp"
     android:textStyle="italic"/>

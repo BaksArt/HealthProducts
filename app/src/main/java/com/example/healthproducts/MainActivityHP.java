@@ -2,11 +2,14 @@ package com.example.healthproducts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -26,22 +29,57 @@ import java.util.List;
 public class MainActivityHP extends AppCompatActivity {
     public boolean isActiveInfoProductFragment;
 
+
     BottomNavigationView bottomNavigationView;
     ScannerFragment scannerFragment = new ScannerFragment();
     DataBaseFragment dataBaseFragment = new DataBaseFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
+
+    SharedPreferences settings;
+
     private ProductAdapter productAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_hp);
 
+        SettingsFragment settingsFragment = new SettingsFragment();
+
+
+
        bottomNavigationView = findViewById(R.id.botton_navigation);
 
-       getSupportFragmentManager().beginTransaction().replace(R.id.container, scannerFragment).commit();
+        settings = this.getPreferences(Context.MODE_PRIVATE);
+        switch (settings.getInt("THEME", 0)){
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+
+            case 2:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
+
+        if(settings.getBoolean("IS_CHANGED", false)){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, settingsFragment).commit();
+            SharedPreferences.Editor ed = settings.edit();
+            ed.putBoolean("IS_CHANGED", false);
+            ed.apply();
+        }else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, scannerFragment).commit();
+
+        }
+
        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
            @Override
            public boolean onNavigationItemSelected(MenuItem item) { //navigation bottom bar
+               SharedPreferences.Editor ed = settings.edit();
+               ed.putBoolean("IS_CHANGED", false);
+               ed.apply();
                switch(item.getItemId()){
                    case R.id.scanner:
                    getSupportFragmentManager().beginTransaction().replace(R.id.container, scannerFragment).commit();
@@ -80,6 +118,12 @@ public class MainActivityHP extends AppCompatActivity {
             finish();
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
     public void updateAdapter(){
         productAdapter.notifyDataSetChanged();

@@ -47,7 +47,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="?attr/background"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
@@ -60,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="@string/category"
-            android:textColor="@color/darkGray"
+            android:textColor="?attr/textFillColor"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:padding="6dp" />
@@ -75,7 +75,7 @@
             android:singleLine="false"
             android:text="@string/product_composition"
             android:layout_marginBottom="50dp"
-            android:textColor="@color/darkGray"
+            android:textColor="?attr/textFillColor"
             android:layout_height="wrap_content"
             android:padding="6dp" />
     </LinearLayout>

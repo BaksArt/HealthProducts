@@ -30,7 +30,8 @@ public class HealthProductsApiVolley implements HealthProductsApi{
 
     public static final String API_TEST = "API_TEST";
     private final Context context;
-    public static final String BASE_URL = "http://192.168.43.14:8085";
+    public static final String BASE_URL2 = "http://192.168.31.55:8081";
+    public static final String BASE_URL = "http://192.168.31.74:8085";
 
     private Response.ErrorListener errorListener;
 

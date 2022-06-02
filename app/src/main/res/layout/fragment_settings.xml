@@ -24,10 +24,54 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
         android:textSize="20sp"
         android:text="@string/appInfo"
-        android:textColor="@color/darkGray"/>
+        android:textColor="?attr/textFillColor"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/text">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_baseline_brightness_medium_24"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/text">
+
+        <TextView
+            android:id="@+id/textTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text"
+            android:text="Тема"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="?attr/textFillColor"/>
+        <Spinner
+            android:id="@+id/spinner_themes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-5dp"
+            android:layout_below="@+id/textTheme">
+        </Spinner>
+    </LinearLayout>
+    </LinearLayout>
+
+
 </RelativeLayout>
