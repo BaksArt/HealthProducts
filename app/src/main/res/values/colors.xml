@@ -8,11 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#373B47</color>
+    <color name="lightGray">#e9efef</color>
+
+    <color name="textColorHint">#979797</color>
+
+
 
 
 
     <color name="cyan">#009667</color>
     <color name="yellow">#FFC107</color>
+    <color name="darkYellow">#A87E00</color>
     <color name="red">#F11743</color>
     <color name="darkGray">#202020</color>
     <color name="recyclerBack">#FFFDE7</color>

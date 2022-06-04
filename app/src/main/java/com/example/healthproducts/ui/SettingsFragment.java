@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.healthproducts.MainActivityHP;
@@ -23,6 +25,7 @@ public class SettingsFragment extends Fragment {
 
 
     private Spinner spinnerTheme;
+    private LinearLayout themeSet;
     SharedPreferences settings;
     public static final String APP_PREFERENCES = "settings";
     @Override
@@ -34,6 +37,7 @@ public class SettingsFragment extends Fragment {
 
 
         spinnerTheme = view.findViewById(R.id.spinner_themes);
+        themeSet = view.findViewById(R.id.theme_set);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, themes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,6 +90,13 @@ public class SettingsFragment extends Fragment {
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg) {
+            }
+        });
+
+        themeSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinnerTheme.performClick();
             }
         });
 

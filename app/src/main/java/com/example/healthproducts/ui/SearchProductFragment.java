@@ -1,9 +1,12 @@
 package com.example.healthproducts.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -16,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.healthproducts.MainActivityHP;
 import com.example.healthproducts.R;
 import com.example.healthproducts.server.adapter.ProductAdapter;
 import com.example.healthproducts.server.dataBase.DataBase;
@@ -35,13 +39,12 @@ import java.util.ArrayList;
 public class SearchProductFragment extends Fragment {
     private String code;
 
+
     WebView gifLoad;
     public static final String loadUrl = "https://s2.siteapi.org/17f5be73889a440/docs/d711owd1khwgg0484csg8w8kgko00w";
     private TextView textStatus;
     private ImageView imageStatus;
     Handler handler;
-    private TextView nameProduct;
-    private LinearLayout infoProduct;
     private boolean isFinding;
     private Document doc;
     private Thread parseThread;
@@ -62,11 +65,6 @@ public class SearchProductFragment extends Fragment {
         gifLoad = view.findViewById(R.id.gifload);
         textStatus = view.findViewById(R.id.textStatus);
         imageStatus = view.findViewById(R.id.imageStatus);
-        nameProduct = view.findViewById(R.id.nameProduct);
-        infoProduct = view.findViewById(R.id.productInfo);
-
-        infoProduct.setVisibility(View.GONE);
-
         imageStatus.setVisibility(View.GONE);
         gifLoad.setVisibility(View.GONE);
 
@@ -78,6 +76,8 @@ public class SearchProductFragment extends Fragment {
         code = getArguments().getSerializable("code").toString();
 
         showStatus("search");
+
+        gifLoad.setBackgroundColor(Color.TRANSPARENT);
 
         Product foundProduct = null;
         for (Product product : DataBase.PRODUCT_LIST) {
@@ -385,7 +385,6 @@ public class SearchProductFragment extends Fragment {
                 gifLoad.loadUrl(loadUrl);
                 gifLoad.setVisibility(View.VISIBLE);
                 imageStatus.setVisibility(View.GONE);
-                //textStatus.setTextColor(R.color.cyan);
                 textStatus.setText("Поиск товара...");
 
                 break;
@@ -394,7 +393,6 @@ public class SearchProductFragment extends Fragment {
                 gifLoad.loadUrl(loadUrl);
                 gifLoad.setVisibility(View.VISIBLE);
                 imageStatus.setVisibility(View.GONE);
-                //textStatus.setTextColor(R.color.cyan);
                 textStatus.setText("Поиск по базе данных...");
 
                 break;
@@ -403,8 +401,7 @@ public class SearchProductFragment extends Fragment {
                 gifLoad.setVisibility(View.GONE);
                 imageStatus.setVisibility(View.VISIBLE);
                 imageStatus.setImageResource(R.drawable.error);
-                //textStatus.setText("Товар не найден");
-                textStatus.setTextColor(R.color.yellow);
+                textStatus.setText("Товар не найден");
                 break;
 
             case "complete":
@@ -412,7 +409,6 @@ public class SearchProductFragment extends Fragment {
                 imageStatus.setVisibility(View.VISIBLE);
                 imageStatus.setImageResource(R.drawable.complete);
                 textStatus.setText("Поиск завершен!");
-                //textStatus.setTextColor(R.color.cyan);
 
                 try {
                     Thread.sleep(1000);
@@ -436,5 +432,12 @@ public class SearchProductFragment extends Fragment {
 
 
         }
+    }
+    public final Context require_Context() {
+        Context context = getContext();
+        if (context == null) {
+            throw new IllegalStateException("Fragment " + this + " not attached to a context.");
+        }
+        return context;
     }
 }
