@@ -37,18 +37,16 @@ public class ScannerFragment extends Fragment {
     private Thread parseThread;
     private Runnable parseRunnable;
     private SurfaceView surfaceView;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource cameraSource;
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
-    private ToneGenerator toneGen1;
-    private TextView barcodeText;
+    private CameraSource cameraSrc;
+    private static final int CAMERA_PERMISSION = 201;
     private String barcodeData;
+    private TextView barcodeText;
+    private BarcodeDetector barcodeDetector;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scanner, container, false);
-        toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         surfaceView = view.findViewById(R.id.surface_view);
         barcodeText = view.findViewById(R.id.barcode_text);
 
@@ -76,7 +74,7 @@ public class ScannerFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        cameraSource.release();
+        cameraSrc.release();
     }
 
     private void initialiseDetectorsAndSources() { //метод для включения камеры и детектеров
@@ -86,9 +84,9 @@ public class ScannerFragment extends Fragment {
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 
-        cameraSource = new CameraSource.Builder(getContext(), barcodeDetector)
+        cameraSrc = new CameraSource.Builder(getContext(), barcodeDetector)
                 .setRequestedPreviewSize(1920, 1080)
-                .setAutoFocusEnabled(true) //you should add this feature
+                .setAutoFocusEnabled(true)
                 .build();
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -96,10 +94,10 @@ public class ScannerFragment extends Fragment {
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        cameraSource.start(surfaceView.getHolder());
+                        cameraSrc.start(surfaceView.getHolder());
                     } else {
                         ActivityCompat.requestPermissions(getActivity(), new
-                                String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                                String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
                     }
 
                 } catch (IOException e) {
@@ -115,7 +113,7 @@ public class ScannerFragment extends Fragment {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
+                cameraSrc.stop();
             }
         });
 
@@ -141,17 +139,13 @@ public class ScannerFragment extends Fragment {
                                 barcodeText.removeCallbacks(null);
                                 barcodeData = barcodes.valueAt(0).email.address;
                                 barcodeText.setText(barcodeData);
-                                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
                             } else {
-
                                 barcodeData = barcodes.valueAt(0).displayValue;
                                 barcodeText.setText(barcodeData);
-                                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-
                             }
 
                             Toast.makeText(getContext(), "Код отсканирован", Toast.LENGTH_SHORT).show();
-                            cameraSource.release();
+                            cameraSrc.release();
 
 
                             SearchProductFragment searchProductFragment = new SearchProductFragment();
@@ -165,10 +159,6 @@ public class ScannerFragment extends Fragment {
                                     .beginTransaction()
                                     .replace(R.id.container, searchProductFragment)
                                     .commit();
-
-
-
-
 
                         }
                     });
